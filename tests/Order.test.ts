@@ -3,6 +3,9 @@ import MovieTicket from '../src/MovieTicket';
 import { TicketExportFormat } from '../src/TicketExportFormat';
 import MovieScreening from '../src/MovieScreening';
 import Movie from '../src/Movie';
+import fs from 'fs';
+
+jest.mock('fs');
 
 describe('Order', () => {
 	let mockedOrder: Order;
@@ -15,6 +18,10 @@ describe('Order', () => {
 		mockedMovie = new Movie('Mr. Bean');
 		mockedMovieScreening = new MovieScreening(new Date('2024-01-31T15:01:10.204Z'), 20, mockedMovie);
 		mockedTicket = new MovieTicket(mockedMovieScreening, true, 1, 2);
+	});
+
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
 	describe('calculatePrice', () => {
@@ -52,6 +59,33 @@ describe('Order', () => {
 		});
 	});
 
-	describe('export', () => {});
-	
+	describe('export', () => {
+		it('should create folder and export json', () => {
+			mockedOrder.export(TicketExportFormat.JSON);
+
+			expect(fs.existsSync).toHaveBeenCalledTimes(1);
+			expect(fs.mkdirSync).toHaveBeenCalledTimes(1);
+			expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+		});
+
+		it('shouldn not create folder and export plaintext', () => {
+			(fs.existsSync as jest.Mock).mockImplementationOnce(() => true);
+
+			mockedOrder.export(TicketExportFormat.PLAINTEXT);
+
+			expect(fs.existsSync).toHaveBeenCalledTimes(1);
+			expect(fs.mkdirSync).toHaveBeenCalledTimes(0);
+			expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+		});
+
+		it('should throw error', () => {
+			try {
+				mockedOrder.export('unsupported' as TicketExportFormat);
+				throw new Error('Expected mockedOrder.export to throw an error, but it did not');
+			} catch (error) {
+				expect(error).toBeInstanceOf(Error);
+				expect(error.message).toBe('Unsupported export format');
+			}
+		});
+	});
 });

@@ -50,12 +50,12 @@ export default class Order {
 		const folderPath = './exports';
 
 		function writeToFile(extenstion: string, data: string) {
+			if (!fs.existsSync(folderPath)) {
+				fs.mkdirSync(folderPath);
+			}
+
 			const path = `${folderPath}/order-export-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDay()}-${currentDate.getTime()}`;
 			fs.writeFileSync(path + '.' + extenstion, data, 'utf-8');
-		}
-
-		if (!fs.existsSync(folderPath)) {
-			fs.mkdirSync(folderPath);
 		}
 
 		switch (format) {
