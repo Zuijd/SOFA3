@@ -1,5 +1,6 @@
 import MovieTicket from './MovieTicket';
 import { TicketExportFormat } from './TicketExportFormat';
+import fs from 'fs';
 
 export default class Order {
 	orderNr: number;
@@ -45,14 +46,34 @@ export default class Order {
 	}
 
 	export(format: TicketExportFormat) {
+		const currentDate = new Date();
+		const folderPath = './exports';
+
+		function writeToFile(extenstion: string, data: string) {
+			const path = `${folderPath}/order-export-${currentDate.getFullYear()}-${currentDate.getMonth()}-${currentDate.getDay()}-${currentDate.getTime()}`;
+			fs.writeFileSync(path + '.' + extenstion, data, 'utf-8');
+		}
+
+		if (!fs.existsSync(folderPath)) {
+			fs.mkdirSync(folderPath);
+		}
+
 		switch (format) {
 			case TicketExportFormat.PLAINTEXT:
-				return 'OrderNr: ' + this.getOrderNr() + '\n' + 'Price: ' + this.calculatePrice();
+				const plaintextData = 'OrderNr: ' + this.getOrderNr() + '\n' + 'Price: ' + this.calculatePrice();
+				writeToFile('txt', plaintextData);
+				break;
+
 			case TicketExportFormat.JSON:
-				return JSON.stringify({
+				const jsonData = JSON.stringify({
 					orderNr: this.getOrderNr(),
 					price: this.calculatePrice(),
 				});
+				writeToFile('json', jsonData);
+				break;
+
+			default:
+				throw new Error('Unsupported export format');
 		}
 	}
 }
