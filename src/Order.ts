@@ -29,7 +29,7 @@ export default class Order {
 			const dateEndTime: Date = ticket.movieScreening.dateEndTime;
 			const isMidDay: boolean = dateEndTime.getDay() >= 1 && dateEndTime.getDay() <= 4;
 			const isFree = (this.isStudentOrder && (index + 1) % 2 === 0) || (isMidDay && (index + 1) % 2 === 0);
-			const withDiscount = isMidDay && this.isStudentOrder && this.movieTickets.length >= 6;
+			const withDiscount = isMidDay && !this.isStudentOrder && this.movieTickets.length >= 6;
 
 			if (isFree) {
 				return;

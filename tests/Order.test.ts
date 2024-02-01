@@ -57,6 +57,27 @@ describe('Order', () => {
 			expect(typeof mockedOrder.calculatePrice()).toBe('number');
 			expect(mockedOrder.calculatePrice()).toBe(22);
 		});
+
+		it('should calculate price for non-students with premium tickets', () => {
+			mockedOrder = new Order(mockedOrder.orderNr, false);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(23);
+		});
+
+		it('should calculate price for non-students with regular tickets on a midday and more then 5 tickets', () => {
+			mockedOrder = new Order(mockedOrder.orderNr, false);
+			mockedMovieScreening = new MovieScreening(new Date('2024-01-31T15:01:10.204Z'), 20, mockedMovie);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(63);
+		});
 	});
 
 	describe('export', () => {
