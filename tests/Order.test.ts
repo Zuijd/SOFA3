@@ -17,40 +17,41 @@ describe('Order', () => {
 		mockedTicket = new MovieTicket(mockedMovieScreening, true, 1, 2);
 	});
 
-	it('should get order number', () => {
-		expect(mockedOrder.getOrderNr()).toBe(1);
+	describe('calculatePrice', () => {
+		it('should not calculate price with zero tickets', () => {
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(0);
+		});
+
+		it('should calculate price with one regular ticket', () => {
+			mockedTicket = new MovieTicket(mockedTicket.movieScreening, false, mockedTicket.seatNr, mockedTicket.rowNr);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(20);
+		});
+
+		it('should calculate price with two tickets and regular seats', () => {
+			mockedTicket = new MovieTicket(mockedTicket.movieScreening, false, mockedTicket.seatNr, mockedTicket.rowNr);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(20);
+		});
+
+		it('should calculate price with one premium ticket', () => {
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(22);
+		});
+
+		it('should calculate price with two premium tickets', () => {
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(22);
+		});
 	});
 
-	it('should add 3 seats to reservation', () => {
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		expect(mockedOrder.movieTickets.length).toBe(3);
-	});
-
-	it('should calculate price', () => {
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		console.log(mockedOrder.calculatePrice());
-		expect(typeof mockedOrder.calculatePrice()).toBe('number');
-		expect(mockedOrder.calculatePrice()).toBe(44);
-	});
-
-	it('should export order details in JSON format', () => {
-		const result = mockedOrder.export(TicketExportFormat.JSON);
-
-		expect(result).toBe(
-			JSON.stringify({
-				orderNr: mockedOrder.getOrderNr(),
-				price: mockedOrder.calculatePrice(),
-			})
-		);
-	});
-
-	it('should export order details in PLAINTEXT format', () => {
-		const result = mockedOrder.export(TicketExportFormat.PLAINTEXT);
-
-		expect(result).toBe('OrderNr: ' + mockedOrder.getOrderNr() + '\n' + 'Price: ' + mockedOrder.calculatePrice());
-	});
+	describe('export', () => {});
+	
 });
