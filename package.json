@@ -1,13 +1,14 @@
 {
 	"devDependencies": {
-		"@types/jest": "^29.5.11",
+		"@types/jest": "^29.5.12",
 		"ts-jest": "^29.1.2"
 	},
 	"scripts": {
 		"test": "jest",
-		"start": "index.ts"
+		"start": "ts-node index.ts"
 	},
 	"dependencies": {
+		"fs": "^0.0.1-security",
 		"ts-node": "^10.9.2"
 	}
 }

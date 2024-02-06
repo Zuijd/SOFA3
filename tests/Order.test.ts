@@ -3,6 +3,9 @@ import MovieTicket from '../src/MovieTicket';
 import { TicketExportFormat } from '../src/TicketExportFormat';
 import MovieScreening from '../src/MovieScreening';
 import Movie from '../src/Movie';
+import fs from 'fs';
+
+jest.mock('fs');
 
 describe('Order', () => {
 	let mockedOrder: Order;
@@ -17,40 +20,93 @@ describe('Order', () => {
 		mockedTicket = new MovieTicket(mockedMovieScreening, true, 1, 2);
 	});
 
-	it('should get order number', () => {
-		expect(mockedOrder.getOrderNr()).toBe(1);
+	afterEach(() => {
+		jest.clearAllMocks();
 	});
 
-	it('should add 3 seats to reservation', () => {
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		expect(mockedOrder.movieTickets.length).toBe(3);
+	describe('calculatePrice', () => {
+		it('should not calculate price with zero tickets', () => {
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(0);
+		});
+
+		it('should calculate price with one regular ticket', () => {
+			mockedTicket = new MovieTicket(mockedTicket.movieScreening, false, mockedTicket.seatNr, mockedTicket.rowNr);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(20);
+		});
+
+		it('should calculate price with two tickets and regular seats', () => {
+			mockedTicket = new MovieTicket(mockedTicket.movieScreening, false, mockedTicket.seatNr, mockedTicket.rowNr);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(20);
+		});
+
+		it('should calculate price with one premium ticket', () => {
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(22);
+		});
+
+		it('should calculate price with two premium tickets', () => {
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(22);
+		});
+
+		it('should calculate price for non-students with premium tickets', () => {
+			mockedOrder = new Order(mockedOrder.orderNr, false);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(23);
+		});
+
+		it('should calculate price for non-students with regular tickets on a midday and more then 5 tickets', () => {
+			mockedOrder = new Order(mockedOrder.orderNr, false);
+			mockedMovieScreening = new MovieScreening(new Date('2024-01-31T15:01:10.204Z'), 20, mockedMovie);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			mockedOrder.addSeatToReservation(mockedTicket);
+			expect(typeof mockedOrder.calculatePrice()).toBe('number');
+			expect(mockedOrder.calculatePrice()).toBe(63);
+		});
 	});
 
-	it('should calculate price', () => {
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		mockedOrder.addSeatToReservation(mockedTicket);
-		console.log(mockedOrder.calculatePrice());
-		expect(typeof mockedOrder.calculatePrice()).toBe('number');
-		expect(mockedOrder.calculatePrice()).toBe(44);
-	});
+	describe('export', () => {
+		it('should create folder and export json', () => {
+			mockedOrder.export(TicketExportFormat.JSON);
 
-	it('should export order details in JSON format', () => {
-		const result = mockedOrder.export(TicketExportFormat.JSON);
+			expect(fs.existsSync).toHaveBeenCalledTimes(1);
+			expect(fs.mkdirSync).toHaveBeenCalledTimes(1);
+			expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+		});
 
-		expect(result).toBe(
-			JSON.stringify({
-				orderNr: mockedOrder.getOrderNr(),
-				price: mockedOrder.calculatePrice(),
-			})
-		);
-	});
+		it('shouldn not create folder and export plaintext', () => {
+			(fs.existsSync as jest.Mock).mockImplementationOnce(() => true);
 
-	it('should export order details in PLAINTEXT format', () => {
-		const result = mockedOrder.export(TicketExportFormat.PLAINTEXT);
+			mockedOrder.export(TicketExportFormat.PLAINTEXT);
 
-		expect(result).toBe('OrderNr: ' + mockedOrder.getOrderNr() + '\n' + 'Price: ' + mockedOrder.calculatePrice());
+			expect(fs.existsSync).toHaveBeenCalledTimes(1);
+			expect(fs.mkdirSync).toHaveBeenCalledTimes(0);
+			expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+		});
+
+		it('should throw error', () => {
+			try {
+				mockedOrder.export('unsupported' as TicketExportFormat);
+				throw new Error('Expected mockedOrder.export to throw an error, but it did not');
+			} catch (error) {
+				expect(error).toBeInstanceOf(Error);
+				expect(error.message).toBe('Unsupported export format');
+			}
+		});
 	});
 });
