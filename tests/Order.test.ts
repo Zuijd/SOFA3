@@ -1,11 +1,10 @@
 import Order from '../src/Order'
 import MovieTicket from '../src/MovieTicket'
-import { TicketExportFormat } from '../src/TicketExportFormat'
 import MovieScreening from '../src/MovieScreening'
 import Movie from '../src/Movie'
 import fs from 'fs'
-import { TicketExportJSON } from '../src/TicketExportJSON'
-import { TicketExportPlainText } from '../src/TicketExportPlainText'
+import TicketExportJSON from '../src/Export/TicketExportJSON'
+import TicketExportPlainText from '../src/Export/TicketExportPlainText'
 
 jest.mock('fs')
 
@@ -70,6 +69,7 @@ describe('Order', () => {
 
 		it('should calculate price for non-students with regular tickets on a midday and more then 5 tickets', () => {
 			mockedOrder = new Order(mockedOrder.orderNr, false)
+			mockedTicket = new MovieTicket(mockedMovieScreening, false, 1, 2)
 			mockedMovieScreening = new MovieScreening(new Date('2024-01-31T15:01:10.204Z'), 20, mockedMovie)
 			mockedOrder.addSeatToReservation(mockedTicket)
 			mockedOrder.addSeatToReservation(mockedTicket)
@@ -78,7 +78,7 @@ describe('Order', () => {
 			mockedOrder.addSeatToReservation(mockedTicket)
 			mockedOrder.addSeatToReservation(mockedTicket)
 			expect(typeof mockedOrder.calculatePrice()).toBe('number')
-			expect(mockedOrder.calculatePrice()).toBe(63)
+			expect(mockedOrder.calculatePrice()).toBe(54)
 		})
 	})
 
