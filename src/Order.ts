@@ -22,11 +22,12 @@ export default class Order {
 	}
 
 	calculatePrice(): number {
-		let totalTicketPrice: number = 0
 		const pricingStrategyFactory: PricingStrategyFactory = new PricingStrategyFactory(this.isStudentOrder)
+		const pricingStrategy: IPricingStrategy = pricingStrategyFactory.getPricingStrategy()
+
+		let totalTicketPrice: number = 0
 
 		this.movieTickets.forEach((ticket, index) => {
-			const pricingStrategy: IPricingStrategy = pricingStrategyFactory.getPricingStrategy()
 			const ticketPrice: number = pricingStrategy.calculatePrice(
 				ticket,
 				(index + 1) % 2 === 0,
