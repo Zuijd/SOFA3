@@ -27,7 +27,11 @@ export default class Order {
 
 		this.movieTickets.forEach((ticket, index) => {
 			const pricingStrategy: IPricingStrategy = pricingStrategyFactory.getPricingStrategy()
-			const ticketPrice: number = pricingStrategy.calculatePrice(ticket, index, this.movieTickets.length)
+			const ticketPrice: number = pricingStrategy.calculatePrice(
+				ticket,
+				(index + 1) % 2 === 0,
+				this.movieTickets.length
+			)
 
 			totalTicketPrice += ticketPrice
 		})
