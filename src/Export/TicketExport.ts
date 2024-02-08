@@ -1,7 +1,7 @@
 import fs from 'fs'
-import Order from './Order'
+import Order from '../Order'
 
-export abstract class TicketExport {
+export default abstract class TicketExport {
 	private folderPath = './exports'
 
 	public abstract export(order: Order): void

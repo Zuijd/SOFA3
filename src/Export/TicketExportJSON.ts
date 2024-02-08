@@ -1,7 +1,7 @@
-import Order from './Order'
-import { TicketExport } from './TicketExport'
+import Order from '../Order'
+import TicketExport from './TicketExport'
 
-export class TicketExportJSON extends TicketExport {
+export default class TicketExportJSON extends TicketExport {
 	public export(order: Order) {
 		const jsonData = JSON.stringify({
 			orderNr: order.getOrderNr(),

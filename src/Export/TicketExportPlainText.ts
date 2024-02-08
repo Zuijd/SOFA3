@@ -1,7 +1,7 @@
-import Order from './Order'
-import { TicketExport } from './TicketExport'
+import Order from '../Order'
+import TicketExport from './TicketExport'
 
-export class TicketExportPlainText extends TicketExport {
+export default class TicketExportPlainText extends TicketExport {
 	public export(order: Order) {
 		const plaintextData = 'OrderNr: ' + order.getOrderNr() + '\n' + 'Price: ' + order.calculatePrice()
 

@@ -1,5 +1,7 @@
 import MovieTicket from './MovieTicket'
-import { TicketExport } from './TicketExport'
+import IPricingStrategy from './Pricing/IPricingStrategy'
+import PricingStrategyFactory from './Pricing/PricingStrategyFactory'
+import TicketExport from './Export/TicketExport'
 
 export default class Order {
 	orderNr: number
@@ -20,25 +22,19 @@ export default class Order {
 	}
 
 	calculatePrice(): number {
+		const pricingStrategyFactory: PricingStrategyFactory = new PricingStrategyFactory(this.isStudentOrder)
+		const pricingStrategy: IPricingStrategy = pricingStrategyFactory.getPricingStrategy()
+
 		let totalTicketPrice: number = 0
+
 		this.movieTickets.forEach((ticket, index) => {
-			let ticketPrice = 0
+			const ticketPrice: number = pricingStrategy.calculatePrice(
+				ticket,
+				(index + 1) % 2 === 0,
+				this.movieTickets.length
+			)
 
-			const pricePerSeat: number = ticket.movieScreening.getPricingPerSeat()
-			const dateEndTime: Date = ticket.movieScreening.dateEndTime
-			const isMidDay: boolean = dateEndTime.getDay() >= 1 && dateEndTime.getDay() <= 4
-			const isFree = (this.isStudentOrder && (index + 1) % 2 === 0) || (isMidDay && (index + 1) % 2 === 0)
-			const withDiscount = isMidDay && !this.isStudentOrder && this.movieTickets.length >= 6
-
-			if (isFree) {
-				return
-			}
-
-			if (ticket.isPremium) {
-				ticketPrice += this.isStudentOrder ? 2 : 3
-			}
-
-			totalTicketPrice += ticketPrice + pricePerSeat * (withDiscount ? 0.9 : 1)
+			totalTicketPrice += ticketPrice
 		})
 
 		return totalTicketPrice
