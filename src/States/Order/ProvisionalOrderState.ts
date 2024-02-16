@@ -1,7 +1,8 @@
 import Order from '../../Order'
+import AvailableMovieTicketState from '../MovieTicket/AvailableMovieTicketState'
 import InitialPaymentState from '../Payment/InitialPaymentState'
+import CancelledOrderState from './CancelledOrderState'
 import IOrderState from './IOrderState'
-import SubmittedOrderState from './SubmittedOrderState'
 
 export default class ProvisionalOrderState implements IOrderState {
 	submit(): void {
@@ -13,7 +14,10 @@ export default class ProvisionalOrderState implements IOrderState {
 	}
 
 	cancel(order: Order): void {
-		order.setState(new SubmittedOrderState())
+		order.setState(new CancelledOrderState())
 		order.payment.setState(new InitialPaymentState())
+		order.movieTickets.forEach((ticket) => {
+			ticket.setState(new AvailableMovieTicketState())
+		})
 	}
 }

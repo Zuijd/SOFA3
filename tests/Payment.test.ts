@@ -43,6 +43,7 @@ describe('Payment', () => {
 			beforeEach(() => {
 				mockedOrder.submit()
 				mockedOrder.startPayment()
+				mockedOrder.addSeatToReservation(mockedTicket)
 			})
 
 			it('completePayment should complete the payment', () => {
@@ -53,7 +54,8 @@ describe('Payment', () => {
 			it('cancelPayment should cancel the payment', () => {
 				mockedOrder.payment.cancelPayment()
 				expect(mockedOrder.payment.state.constructor.name).toBe('InitialPaymentState')
-				expect(mockedOrder.state.constructor.name).toBe('InitialOrderState')
+				expect(mockedOrder.state.constructor.name).toBe('CancelledOrderState')
+				expect(mockedOrder.movieTickets[0].state.constructor.name).toBe('AvailableMovieTicketState')
 			})
 		})
 

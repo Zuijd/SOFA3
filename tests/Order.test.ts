@@ -234,7 +234,7 @@ describe('Order', () => {
 
 			it('cancel should cancel the order', () => {
 				mockedOrder.cancel()
-				expect(mockedOrder.state.constructor.name).toBe('SubmittedOrderState')
+				expect(mockedOrder.state.constructor.name).toBe('CancelledOrderState')
 				expect(mockedOrder.payment.state.constructor.name).toBe('InitialPaymentState')
 			})
 		})
