@@ -2,11 +2,6 @@ import Order from '../src/Order'
 import MovieTicket from '../src/MovieTicket'
 import MovieScreening from '../src/MovieScreening'
 import Movie from '../src/Movie'
-import fs from 'fs'
-import TicketExportJSON from '../src/Strategies/Export/TicketExportJSON'
-import TicketExportPlainText from '../src/Strategies/Export/TicketExportPlainText'
-
-jest.mock('fs')
 
 describe('Order', () => {
 	let mockedOrder: Order
@@ -82,33 +77,166 @@ describe('Order', () => {
 		})
 	})
 
-	describe('export', () => {
-		it('should create folder and export json', () => {
-			mockedOrder.export(new TicketExportJSON())
+	describe('States', () => {
+		beforeEach(() => {
+			mockedOrder.addSeatToReservation(mockedTicket)
+		})
+		describe('when state is initial', () => {
+			it('submit should submit the order', () => {
+				mockedOrder.submit()
+				expect(mockedOrder.state.constructor.name).toBe('SubmittedOrderState')
+			})
 
-			expect(fs.existsSync).toHaveBeenCalledTimes(1)
-			expect(fs.mkdirSync).toHaveBeenCalledTimes(1)
-			expect(fs.writeFileSync).toHaveBeenCalledTimes(1)
+			it('startPayment should throw an error', () => {
+				try {
+					mockedOrder.startPayment()
+					throw new Error('Expected mockedOrder.startPayment to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order must first be submitted!')
+					expect(mockedOrder.payment.state.constructor.name).toBe('InitialPaymentState')
+					expect(mockedOrder.state.constructor.name).toBe('InitialOrderState')
+				}
+			})
+
+			it('cancel should cancel the order', () => {
+				mockedOrder.cancel()
+				expect(mockedOrder.state.constructor.name).toBe('CancelledOrderState')
+				expect(mockedOrder.movieTickets[0].state.constructor.name).toBe('AvailableMovieTicketState')
+			})
 		})
 
-		it('shouldn not create folder and export plaintext', () => {
-			;(fs.existsSync as jest.Mock).mockImplementationOnce(() => true)
+		describe('when state is submitted', () => {
+			beforeEach(() => {
+				mockedOrder.submit()
+			})
 
-			mockedOrder.export(new TicketExportPlainText())
+			it('submit should throw an error', () => {
+				try {
+					mockedOrder.submit()
+					throw new Error('Expected mockedOrder.submit to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has already been submitted!')
+					expect(mockedOrder.state.constructor.name).toBe('SubmittedOrderState')
+				}
+			})
 
-			expect(fs.existsSync).toHaveBeenCalledTimes(1)
-			expect(fs.mkdirSync).toHaveBeenCalledTimes(0)
-			expect(fs.writeFileSync).toHaveBeenCalledTimes(1)
+			it('startPayment should start the payment', () => {
+				mockedOrder.startPayment()
+				expect(mockedOrder.payment.state.constructor.name).toBe('StartedPaymentState')
+				expect(mockedOrder.state.constructor.name).toBe('ProvisionalOrderState')
+			})
+
+			it('cancel should cancel the order', () => {
+				mockedOrder.cancel()
+				expect(mockedOrder.state.constructor.name).toBe('InitialOrderState')
+			})
 		})
 
-		it('should throw error', () => {
-			try {
-				mockedOrder.export(new Object() as TicketExportJSON)
-				throw new Error('Expected mockedOrder.export to throw an error, but it did not')
-			} catch (error) {
-				expect(error).toBeInstanceOf(Error)
-				expect(error.message).toBe('exportType.export is not a function')
-			}
+		describe('when state is completed', () => {
+			beforeEach(() => {
+				mockedOrder.submit()
+				mockedOrder.startPayment()
+				mockedOrder.payment.completePayment()
+			})
+
+			it('submit should throw an error', () => {
+				try {
+					mockedOrder.submit()
+					throw new Error('Expected mockedOrder.submit to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has already been completed!')
+					expect(mockedOrder.state.constructor.name).toBe('CompletedOrderState')
+				}
+			})
+
+			it('startPayment should throw an error', () => {
+				try {
+					mockedOrder.startPayment()
+					throw new Error('Expected mockedOrder.startPayment to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has already been completed!')
+					expect(mockedOrder.state.constructor.name).toBe('CompletedOrderState')
+				}
+			})
+
+			it('cancel should throw an error', () => {
+				try {
+					mockedOrder.cancel()
+					throw new Error('Expected mockedOrder.cancel to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has already been completed!')
+					expect(mockedOrder.state.constructor.name).toBe('CompletedOrderState')
+				}
+			})
+		})
+
+		describe('when state is cancelled', () => {
+			beforeEach(() => {
+				mockedOrder.cancel()
+			})
+
+			it('submit should throw an error', () => {
+				try {
+					mockedOrder.submit()
+					throw new Error('Expected mockedOrder.submit to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has been cancelled!')
+					expect(mockedOrder.state.constructor.name).toBe('CancelledOrderState')
+				}
+			})
+
+			it('startPayment should throw an error', () => {
+				try {
+					mockedOrder.startPayment()
+					throw new Error('Expected mockedOrder.startPayment to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has been cancelled!')
+					expect(mockedOrder.state.constructor.name).toBe('CancelledOrderState')
+				}
+			})
+
+			it('cancel should throw an error', () => {
+				try {
+					mockedOrder.cancel()
+					throw new Error('Expected mockedOrder.cancel to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has already been cancelled!')
+					expect(mockedOrder.state.constructor.name).toBe('CancelledOrderState')
+				}
+			})
+		})
+
+		describe('when state is provisional', () => {
+			beforeEach(() => {
+				mockedOrder.submit()
+				mockedOrder.startPayment()
+			})
+
+			it('submit should throw an error', () => {
+				try {
+					mockedOrder.submit()
+					throw new Error('Expected mockedOrder.submit to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The order has already been submitted!')
+					expect(mockedOrder.state.constructor.name).toBe('ProvisionalOrderState')
+				}
+			})
+
+			it('startPayment should throw an error', () => {
+				try {
+					mockedOrder.startPayment()
+					throw new Error('Expected mockedOrder.startPayment to throw an error, but it did not')
+				} catch (error) {
+					expect(error.message).toBe('The payment has already been started!')
+					expect(mockedOrder.state.constructor.name).toBe('ProvisionalOrderState')
+				}
+			})
+
+			it('cancel should cancel the order', () => {
+				mockedOrder.cancel()
+				expect(mockedOrder.state.constructor.name).toBe('SubmittedOrderState')
+				expect(mockedOrder.payment.state.constructor.name).toBe('InitialPaymentState')
+			})
 		})
 	})
 })

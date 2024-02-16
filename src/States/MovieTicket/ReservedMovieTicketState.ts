@@ -1,15 +1,15 @@
 import MovieTicket from '../../MovieTicket'
 import AvailableMovieTicketState from './AvailableMovieTicketState'
 import IMovieTicketState from './IMovieTicketState'
-import ProvisionalMovieTicketState from './ProvisionalMovieTicketState'
+import FinalizedMovieTicketState from './FinalizedMovieTicketState'
 
 export default class ReservedMovieTicketState implements IMovieTicketState {
 	reserve() {
 		throw new Error('The ticket has already been reserved!')
 	}
 
-	provisionalize(ticket: MovieTicket) {
-		ticket.setState(new ProvisionalMovieTicketState())
+	finalize(ticket: MovieTicket) {
+		ticket.setState(new FinalizedMovieTicketState())
 	}
 
 	cancel(ticket: MovieTicket) {

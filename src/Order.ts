@@ -60,9 +60,13 @@ export default class Order {
 	}
 
 	startPayment() {
-		if (this.state.startPayment()) {
+		if (this.state.startPayment(this)) {
 			this.payment.setState(new StartedPaymentState())
 		}
+	}
+
+	cancel() {
+		this.state.cancel(this)
 	}
 
 	export(exportType: TicketExport) {

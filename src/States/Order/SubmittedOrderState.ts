@@ -1,15 +1,23 @@
+import Order from '../../Order'
+import AvailableMovieTicketState from '../MovieTicket/AvailableMovieTicketState'
 import IOrderState from './IOrderState'
+import InitialOrderState from './InitialOrderState'
+import ProvisionalOrderState from './ProvisionalOrderState'
 
 export default class SubmittedOrderState implements IOrderState {
 	submit(): void {
 		throw new Error('The order has already been submitted!')
 	}
 
-	startPayment(): boolean {
+	startPayment(order: Order): boolean {
+		order.state = new ProvisionalOrderState()
 		return true
 	}
 
-	cancel(): void {
-		throw new Error('Method not implemented.')
+	cancel(order: Order): void {
+		order.state = new InitialOrderState()
+		order.movieTickets.forEach((ticket) => {
+			ticket.setState(new AvailableMovieTicketState())
+		})
 	}
 }

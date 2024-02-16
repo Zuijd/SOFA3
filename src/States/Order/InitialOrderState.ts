@@ -1,5 +1,6 @@
 import Order from '../../Order'
 import AvailableMovieTicketState from '../MovieTicket/AvailableMovieTicketState'
+import CancelledOrderState from './CancelledOrderState'
 import IOrderState from './IOrderState'
 import SubmittedOrderState from './SubmittedOrderState'
 
@@ -16,5 +17,6 @@ export default class InitialOrderState implements IOrderState {
 		order.movieTickets.forEach((ticket) => {
 			ticket.setState(new AvailableMovieTicketState())
 		})
+		order.setState(new CancelledOrderState())
 	}
 }

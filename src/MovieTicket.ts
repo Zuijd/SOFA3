@@ -32,4 +32,16 @@ export default class MovieTicket {
 	toString() {
 		return `${this.rowNr} - ${this.seatNr} - ${this.isPremium}`
 	}
+
+	reserve() {
+		this.state.reserve(this)
+	}
+
+	finalize() {
+		this.state.finalize(this)
+	}
+
+	cancel() {
+		this.state.cancel(this)
+	}
 }
