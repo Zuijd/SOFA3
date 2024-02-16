@@ -3,8 +3,8 @@ import MovieTicket from '../src/MovieTicket'
 import MovieScreening from '../src/MovieScreening'
 import Movie from '../src/Movie'
 import fs from 'fs'
-import TicketExportJSON from '../src/Export/TicketExportJSON'
-import TicketExportPlainText from '../src/Export/TicketExportPlainText'
+import TicketExportJSON from '../src/Strategies/Export/TicketExportJSON'
+import TicketExportPlainText from '../src/Strategies/Export/TicketExportPlainText'
 
 jest.mock('fs')
 

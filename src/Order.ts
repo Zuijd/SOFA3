@@ -1,10 +1,10 @@
 import MovieTicket from './MovieTicket'
 import IPricingStrategy from './Strategies/Pricing/IPricingStrategy'
-import PricingStrategyFactory from './Pricing/PricingStrategyFactory'
+import PricingStrategyFactory from './Strategies/Pricing/PricingStrategyFactory'
 import TicketExport from './Strategies/Export/TicketExport'
 import IOrderState from './States/Order/IOrderState'
 import InitialOrderState from './States/Order/InitialOrderState'
-import Payment from './payment'
+import Payment from './Payment'
 import StartedPaymentState from './States/Payment/StartedPaymentState'
 
 export default class Order {

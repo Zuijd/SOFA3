@@ -1,4 +1,4 @@
-import Payment from '../../payment'
+import Payment from '../../Payment'
 import InitialOrderState from '../Order/InitialOrderState'
 import CompletedPaymentState from './CompletedPaymentState'
 import IPaymentState from './IPaymentState'

@@ -1,4 +1,4 @@
-import MovieTicket from '../MovieTicket'
+import MovieTicket from '../../MovieTicket'
 import IPricingStrategy from './IPricingStrategy'
 
 export default class RegularPricingStrategy implements IPricingStrategy {
