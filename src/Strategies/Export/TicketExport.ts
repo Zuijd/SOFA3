@@ -1,5 +1,5 @@
 import fs from 'fs'
-import Order from '../Order'
+import Order from '../../Order'
 
 export default abstract class TicketExport {
 	private folderPath = './exports'

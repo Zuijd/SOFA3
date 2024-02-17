@@ -1,4 +1,4 @@
-import Order from '../Order'
+import Order from '../../Order'
 import TicketExport from './TicketExport'
 
 export default class TicketExportJSON extends TicketExport {
