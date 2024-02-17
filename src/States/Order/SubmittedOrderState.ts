@@ -9,13 +9,13 @@ export default class SubmittedOrderState implements IOrderState {
 		throw new Error('The order has already been submitted!')
 	}
 
-	startPayment(order: Order): boolean {
-		order.state = new ProvisionalOrderState()
-		return true
+	startPayment(order: Order): void {
+		order.setState(new ProvisionalOrderState())
 	}
 
 	cancel(order: Order): void {
-		order.state = new InitialOrderState()
+		order.setState(new InitialOrderState())
+
 		order.movieTickets.forEach((ticket) => {
 			ticket.setState(new AvailableMovieTicketState())
 		})

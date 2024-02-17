@@ -6,6 +6,7 @@ import IOrderState from './States/Order/IOrderState'
 import InitialOrderState from './States/Order/InitialOrderState'
 import Payment from './Payment'
 import StartedPaymentState from './States/Payment/StartedPaymentState'
+import ProvisionalOrderState from './States/Order/ProvisionalOrderState'
 
 export default class Order {
 	orderNr: number
@@ -60,7 +61,7 @@ export default class Order {
 	}
 
 	startPayment() {
-		if (this.state.startPayment(this)) {
+		if (this.state instanceof ProvisionalOrderState) {
 			this.payment.setState(new StartedPaymentState())
 		}
 	}
