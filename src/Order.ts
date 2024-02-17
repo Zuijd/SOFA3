@@ -61,6 +61,8 @@ export default class Order {
 	}
 
 	startPayment() {
+		this.state.startPayment(this)
+
 		if (this.state instanceof ProvisionalOrderState) {
 			this.payment.setState(new StartedPaymentState())
 		}
