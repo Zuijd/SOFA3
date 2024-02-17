@@ -1,5 +1,6 @@
 import Order from '../../Order'
 import AvailableMovieTicketState from '../MovieTicket/AvailableMovieTicketState'
+import StartedPaymentState from '../Payment/StartedPaymentState'
 import IOrderState from './IOrderState'
 import InitialOrderState from './InitialOrderState'
 import ProvisionalOrderState from './ProvisionalOrderState'
@@ -11,6 +12,7 @@ export default class SubmittedOrderState implements IOrderState {
 
 	startPayment(order: Order): void {
 		order.setState(new ProvisionalOrderState())
+		order.payment.setState(new StartedPaymentState())
 	}
 
 	cancel(order: Order): void {
