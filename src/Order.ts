@@ -5,10 +5,10 @@ import TicketExport from './Strategies/Export/TicketExport'
 import IOrderState from './States/Order/IOrderState'
 import InitialOrderState from './States/Order/InitialOrderState'
 import Payment from './Payment'
-import StartedPaymentState from './States/Payment/StartedPaymentState'
-import ProvisionalOrderState from './States/Order/ProvisionalOrderState'
+import { ISubject } from './Observers/ISubject'
+import { ConcreteObserver } from './Observers/ConcreteObserver'
 
-export default class Order {
+export default class Order extends ConcreteObserver implements ISubject {
 	orderNr: number
 	isStudentOrder: boolean
 	movieTickets: MovieTicket[]
@@ -17,6 +17,8 @@ export default class Order {
 	payment: Payment
 
 	constructor(orderNr: number, isStudentOrder: boolean, isParkingTicketIncluded?: boolean) {
+		super()
+
 		this.orderNr = orderNr
 		this.isStudentOrder = isStudentOrder
 		this.movieTickets = []
@@ -57,14 +59,20 @@ export default class Order {
 	}
 
 	submit() {
+		this.notify('Order submitted')
+
 		this.state.submit(this)
 	}
 
 	startPayment() {
+		this.notify('Payment of order started')
+
 		this.state.startPayment(this)
 	}
 
 	cancel() {
+		this.notify('Order cancelled')
+
 		this.state.cancel(this)
 	}
 

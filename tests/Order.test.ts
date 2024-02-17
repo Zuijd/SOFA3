@@ -2,6 +2,7 @@ import Order from '../src/Order'
 import MovieTicket from '../src/MovieTicket'
 import MovieScreening from '../src/MovieScreening'
 import Movie from '../src/Movie'
+import { ConsoleNotification } from '../src/Notifications/ConsoleNotification'
 
 describe('Order', () => {
 	let mockedOrder: Order
