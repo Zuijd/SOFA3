@@ -5,10 +5,9 @@ import TicketExport from './Strategies/Export/TicketExport'
 import IOrderState from './States/Order/IOrderState'
 import InitialOrderState from './States/Order/InitialOrderState'
 import Payment from './Payment'
-import { ISubject } from './Observers/ISubject'
-import { ConcreteObserver } from './Observers/ConcreteObserver'
+import NotificationObservable from './Observers/NotificationObservable'
 
-export default class Order extends ConcreteObserver implements ISubject {
+export default class Order extends NotificationObservable {
 	orderNr: number
 	isStudentOrder: boolean
 	movieTickets: MovieTicket[]
@@ -65,7 +64,7 @@ export default class Order extends ConcreteObserver implements ISubject {
 	}
 
 	startPayment() {
-		this.notify('Payment of order started')
+		this.notify('Payment started')
 
 		this.state.startPayment(this)
 	}

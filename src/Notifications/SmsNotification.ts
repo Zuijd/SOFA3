@@ -1,7 +1,7 @@
 import { INotificationObserver } from '../Observers/INotificationObserver'
 
-export class ConsoleNotification implements INotificationObserver {
+export default class SmsNotification implements INotificationObserver {
 	update(message: string): void {
-		console.log(`[CONSOLE] ${message}`)
+		console.log(`[SMS] ${message}`)
 	}
 }

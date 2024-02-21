@@ -20,7 +20,5 @@ order.addSeatToReservation(ticket)
 order.addSeatToReservation(ticket)
 order.addSeatToReservation(ticket)
 
-console.log(order.calculatePrice())
-
 order.submit()
 order.startPayment()
