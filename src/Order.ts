@@ -76,6 +76,8 @@ export default class Order extends NotificationObservable {
 	}
 
 	export(exportType: TicketExport) {
+		this.notify('Order exported to file')
+
 		exportType.export(this)
 	}
 }

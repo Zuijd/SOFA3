@@ -7,7 +7,7 @@ export default class NotificationObservable {
 		this.observer = observer
 	}
 
-	detach(_observer: INotificationObserver): void {
+	detach(): void {
 		this.observer = undefined
 	}
 

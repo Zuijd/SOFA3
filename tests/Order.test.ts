@@ -2,7 +2,7 @@ import Order from '../src/Order'
 import MovieTicket from '../src/MovieTicket'
 import MovieScreening from '../src/MovieScreening'
 import Movie from '../src/Movie'
-import { ConsoleNotification } from '../src/Notifications/ConsoleNotification'
+import ConsoleNotification from '../src/Notifications/ConsoleNotification'
 
 describe('Order', () => {
 	let mockedOrder: Order
@@ -15,6 +15,9 @@ describe('Order', () => {
 		mockedMovie = new Movie('Mr. Bean')
 		mockedMovieScreening = new MovieScreening(new Date('2024-01-31T15:01:10.204Z'), 20, mockedMovie)
 		mockedTicket = new MovieTicket(mockedMovieScreening, true, 1, 2)
+
+		mockedOrder.attach(new ConsoleNotification())
+		mockedOrder.notify = jest.fn()
 	})
 
 	afterEach(() => {
@@ -121,15 +124,17 @@ describe('Order', () => {
 				}
 			})
 
-			it('startPayment should start the payment', () => {
+			it('startPayment should start the payment and call notify', () => {
 				mockedOrder.startPayment()
 				expect(mockedOrder.payment.state.constructor.name).toBe('StartedPaymentState')
 				expect(mockedOrder.state.constructor.name).toBe('ProvisionalOrderState')
+				expect(mockedOrder.notify).toHaveBeenCalled()
 			})
 
-			it('cancel should cancel the order', () => {
+			it('cancel should cancel the order and call notify', () => {
 				mockedOrder.cancel()
 				expect(mockedOrder.state.constructor.name).toBe('InitialOrderState')
+				expect(mockedOrder.notify).toHaveBeenCalledTimes(2)
 			})
 		})
 

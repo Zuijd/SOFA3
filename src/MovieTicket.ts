@@ -1,8 +1,9 @@
-import MovieScreening from './MovieScreening';
+import MovieScreening from './MovieScreening'
+import NotificationObservable from './Observers/NotificationObservable'
 import AvailableMovieTicketState from './States/MovieTicket/AvailableMovieTicketState'
 import IMovieTicketState from './States/MovieTicket/IMovieTicketState'
 
-export default class MovieTicket {
+export default class MovieTicket extends NotificationObservable {
 	rowNr: number
 	seatNr: number
 	isPremium: boolean
@@ -10,6 +11,8 @@ export default class MovieTicket {
 	state: IMovieTicketState
 
 	constructor(movieScreening: MovieScreening, isPremiumReservation: boolean, seatNr: number, rowNr: number) {
+		super()
+
 		this.rowNr = rowNr
 		this.seatNr = seatNr
 		this.isPremium = isPremiumReservation
@@ -34,6 +37,8 @@ export default class MovieTicket {
 	}
 
 	reserve() {
+		this.notify('Ticket reserved')
+
 		this.state.reserve(this)
 	}
 
@@ -42,6 +47,8 @@ export default class MovieTicket {
 	}
 
 	cancel() {
+		this.notify('Ticket canceled')
+
 		this.state.cancel(this)
 	}
 }
