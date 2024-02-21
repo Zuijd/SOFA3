@@ -16,10 +16,12 @@ export default class Payment {
 	}
 
 	completePayment() {
+		this.order.notify('Payment completed')
 		this.state.completePayment(this)
 	}
 
 	cancelPayment() {
+		this.order.notify('Payment canceled')
 		this.state.cancelPayment(this)
 	}
 }

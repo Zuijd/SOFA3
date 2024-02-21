@@ -2,6 +2,7 @@ import Order from '../src/Order'
 import fs from 'fs'
 import TicketExportJSON from '../src/Strategies/Export/TicketExportJSON'
 import TicketExportPlainText from '../src/Strategies/Export/TicketExportPlainText'
+import WhatsAppNotification from '../src/Notifications/WhatsAppNotification'
 
 jest.mock('fs')
 
@@ -10,6 +11,8 @@ describe('Export', () => {
 
 	beforeEach(() => {
 		mockedOrder = new Order(1, true)
+
+		mockedOrder.attach(new WhatsAppNotification())
 	})
 
 	afterEach(() => {

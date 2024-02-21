@@ -5,10 +5,9 @@ import TicketExport from './Strategies/Export/TicketExport'
 import IOrderState from './States/Order/IOrderState'
 import InitialOrderState from './States/Order/InitialOrderState'
 import Payment from './Payment'
-import StartedPaymentState from './States/Payment/StartedPaymentState'
-import ProvisionalOrderState from './States/Order/ProvisionalOrderState'
+import NotificationObservable from './Observers/NotificationObservable'
 
-export default class Order {
+export default class Order extends NotificationObservable {
 	orderNr: number
 	isStudentOrder: boolean
 	movieTickets: MovieTicket[]
@@ -17,6 +16,8 @@ export default class Order {
 	payment: Payment
 
 	constructor(orderNr: number, isStudentOrder: boolean, isParkingTicketIncluded?: boolean) {
+		super()
+
 		this.orderNr = orderNr
 		this.isStudentOrder = isStudentOrder
 		this.movieTickets = []
@@ -57,18 +58,26 @@ export default class Order {
 	}
 
 	submit() {
+		this.notify('Order submitted')
+
 		this.state.submit(this)
 	}
 
 	startPayment() {
+		this.notify('Payment started')
+
 		this.state.startPayment(this)
 	}
 
 	cancel() {
+		this.notify('Order cancelled')
+
 		this.state.cancel(this)
 	}
 
 	export(exportType: TicketExport) {
+		this.notify('Order exported to file')
+
 		exportType.export(this)
 	}
 }

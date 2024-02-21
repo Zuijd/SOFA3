@@ -2,6 +2,7 @@ import Order from '../src/Order'
 import MovieTicket from '../src/MovieTicket'
 import MovieScreening from '../src/MovieScreening'
 import Movie from '../src/Movie'
+import EmailNotification from '../src/Notifications/EmailNotification'
 
 describe('Payment', () => {
 	let mockedOrder: Order
@@ -14,6 +15,8 @@ describe('Payment', () => {
 		mockedMovie = new Movie('Mr. Bean')
 		mockedMovieScreening = new MovieScreening(new Date('2024-01-31T15:01:10.204Z'), 20, mockedMovie)
 		mockedTicket = new MovieTicket(mockedMovieScreening, true, 1, 2)
+
+		mockedOrder.attach(new EmailNotification())
 	})
 
 	describe('States', () => {
