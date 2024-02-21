@@ -1,6 +1,6 @@
 import { INotificationObserver } from './INotificationObserver'
 
-export default abstract class NotificationObservable {
+export default class NotificationObservable {
 	private observer: INotificationObserver | undefined
 
 	attach(observer: INotificationObserver): void {
