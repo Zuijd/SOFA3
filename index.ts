@@ -2,6 +2,7 @@ import Movie from './src/Movie'
 import MovieScreening from './src/MovieScreening'
 import MovieTicket from './src/MovieTicket'
 import { ConsoleNotification } from './src/Notifications/ConsoleNotification'
+import EmailNotification from './src/Notifications/EmailNotification'
 import Order from './src/Order'
 
 const consoleNotification = new ConsoleNotification()
@@ -21,4 +22,6 @@ order.addSeatToReservation(ticket)
 order.addSeatToReservation(ticket)
 
 order.submit()
+order.attach(new EmailNotification())
+
 order.startPayment()

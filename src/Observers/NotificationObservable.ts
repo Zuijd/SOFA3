@@ -13,9 +13,9 @@ export default abstract class NotificationObservable {
 
 	notify(message: string): void {
 		if (this.observer) {
-			this.observer.update(message)
+			this.observer.notify(message)
 		} else {
-			console.log('No observer attached')
+			throw new Error('No observer attached!')
 		}
 	}
 }

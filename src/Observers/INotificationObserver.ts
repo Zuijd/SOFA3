@@ -1,3 +1,3 @@
 export interface INotificationObserver {
-	update(message: string): void
+	notify(message: string): void
 }
