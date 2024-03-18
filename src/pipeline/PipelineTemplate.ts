@@ -1,29 +1,29 @@
 // Template for Template Pattern
 export default abstract class PipelineTemplate {
 	async execute(): Promise<void> {
-		await this.fetchSource()
-		await this.installPackages()
-		await this.build()
-		await this.test()
-		await this.analyze()
-		await this.deploy()
-		await this.executeUtility()
-		await this.finish()
+		await this.fetchSourceAsync()
+		await this.installPackagesAsync()
+		await this.buildAsync()
+		await this.testAsync()
+		await this.analyzeAsync()
+		await this.deployAsync()
+		await this.executeUtilityAsync()
+		await this.finishAsync()
 	}
 
-	protected async fetchSource(): Promise<void> {
+	protected async fetchSourceAsync(): Promise<void> {
 		console.log('Fetching source...')
 	}
 
-	protected async finish(): Promise<void> {
+	protected async finishAsync(): Promise<void> {
 		console.log('Finishing...')
 		console.log('Pipeline executed successfully!')
 	}
 
-	protected abstract installPackages(): Promise<void>
-	protected abstract build(): Promise<void>
-	protected abstract test(): Promise<void>
-	protected abstract analyze(): Promise<void>
-	protected abstract deploy(): Promise<void>
-	protected abstract executeUtility(): Promise<void>
+	protected abstract installPackagesAsync(): Promise<void>
+	protected abstract buildAsync(): Promise<void>
+	protected abstract testAsync(): Promise<void>
+	protected abstract analyzeAsync(): Promise<void>
+	protected abstract deployAsync(): Promise<void>
+	protected abstract executeUtilityAsync(): Promise<void>
 }
