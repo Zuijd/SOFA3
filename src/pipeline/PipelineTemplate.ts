@@ -1,6 +1,6 @@
 // Template for Template Pattern
 export default abstract class PipelineTemplate {
-	async execute(): Promise<void> {
+	async executeAsync(): Promise<void> {
 		await this.fetchSourceAsync()
 		await this.installPackagesAsync()
 		await this.buildAsync()
