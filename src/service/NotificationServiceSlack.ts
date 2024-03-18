@@ -1,7 +1,7 @@
 import INotificationService from './INotificationService'
 import SlackService from './external/SlackService'
 
-// Implementation of Adapter Pattern
+// Slack adapter for Adapter Pattern
 export default class NotificationServiceSlack implements INotificationService {
 	private slackService: SlackService
 

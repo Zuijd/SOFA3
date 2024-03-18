@@ -1,7 +1,7 @@
 import INotificationService from './INotificationService'
 import EmailService from './external/EmailService'
 
-// Implementation of Adapter Pattern
+// Email adapter for Adapter Pattern
 export default class NotificationServiceEmail implements INotificationService {
 	private emailService: EmailService
 
