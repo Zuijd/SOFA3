@@ -1,7 +1,8 @@
 import Report from '../Report'
-import IReportExport from './IReportExport'
+import IReportExportStrategy from './IReportExportStrategy'
 
-export default class ReportExportPdf implements IReportExport {
+// Concrete implementation for Strategy Pattern
+export default class ReportExportPdf implements IReportExportStrategy {
 	export(report: Report) {
 		console.log('Exporting report to PDF')
 	}
