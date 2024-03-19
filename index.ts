@@ -8,9 +8,7 @@ import EmailService from './src/notification/external/EmailService'
 import SlackService from './src/notification/external/SlackService'
 import ReviewSprint from './src/sprint/ReviewSprint'
 import { SprintStatus } from './src/sprint/SprintStatus'
-import UserScrumMaster from './src/user/UserScrumMaster'
-import UserTester from './src/user/UserTester'
-import UserDeveloper from './src/user/userDeveloper'
+import UserFactory from './src/user/UserFactory'
 
 console.log(chalk.red.bold.underline('--- Avans DevOps Started ---\n'))
 
@@ -27,11 +25,11 @@ const multipleNotificationServices = [
 	new NotificationServiceEmail(new EmailService()),
 ]
 
-const scrumMaster = new UserScrumMaster('Kees Boom', multipleNotificationServices)
-const leadDeveloper = new UserTester('Ryan Scope', multipleNotificationServices)
-const developer = new UserDeveloper('John Doe', singleNotificationService)
-const developer2 = new UserDeveloper('Henk Keesmaat', singleNotificationService)
-const tester = new UserTester('Hans Boom', singleNotificationService)
+const scrumMaster = new UserFactory().createUser('Kees Boom', 'ScrumMaster', multipleNotificationServices)
+const leadDeveloper = new UserFactory().createUser('Ryan Scope', 'LeadDeveloper', multipleNotificationServices)
+const developer = new UserFactory().createUser('John Doe', 'Developer', singleNotificationService)
+const developer2 = new UserFactory().createUser('Henk Kees', 'Developer', singleNotificationService)
+const tester = new UserFactory().createUser('Hans Boom', 'Tester', singleNotificationService)
 
 const activity1 = new Activity('Create a new component', 3)
 const activity2 = new Activity('Create a new service', 2)

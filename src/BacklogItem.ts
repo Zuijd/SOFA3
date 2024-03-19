@@ -3,7 +3,7 @@ import Subject from './observer/Subject'
 import ProgressionState from './progression/ProgressionState'
 import ProgressionStateTodo from './progression/ProgressionStateTodo'
 import ThreadComponent from './thread/ThreadComponent'
-import IUser from './user/IUser'
+import User from './user/User'
 
 export default class BacklogItem extends Subject {
 	userStory: string
@@ -11,7 +11,7 @@ export default class BacklogItem extends Subject {
 	activities: Activity[] = []
 	progression: ProgressionState = new ProgressionStateTodo(this)
 	threads: ThreadComponent[] = []
-	user?: IUser
+	user?: User
 
 	constructor(userStory: string, storyPoints: number, activities: Activity[] = []) {
 		super()
@@ -41,7 +41,7 @@ export default class BacklogItem extends Subject {
 		this.threads = this.threads.filter((item) => item !== thread)
 	}
 
-	assignUser(user: IUser): void {
+	assignUser(user: User): void {
 		this.user = user
 
 		switch (this.constructor) {
