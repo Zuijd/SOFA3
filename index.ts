@@ -1,13 +1,24 @@
-import ThreadComponent from './src/thread/ThreadComponent'
-import ThreadComposite from './src/thread/ThreadComposite'
-import ThreadLeaf from './src/thread/ThreadLeaf'
-import IUser from './src/user/IUser'
-import UserDeveloper from './src/user/userDeveloper'
+import Activity from './src/Activity'
+import BacklogItem from './src/BacklogItem'
+import NotificationServiceEmail from './src/notification/NotificationServiceEmail'
+import NotificationServiceSlack from './src/notification/NotificationServiceSlack'
+import EmailService from './src/notification/external/EmailService'
+import SlackService from './src/notification/external/SlackService'
+import UserDeveloper from './src/user/UserDeveloper'
 
-const user = new UserDeveloper('John Doe')
-const thread = new ThreadComposite('Hello, World!', user)
-thread.addThread(new ThreadComposite('How are you?', user))
-const reply = thread.getThreads()[0] as ThreadComposite
-reply.addThread(new ThreadLeaf('I am fine.', user))
-reply.addThread(new ThreadLeaf('I am fine too.', user))
-thread.display()
+// --- Observable pattern Example ---
+const singleNotificationService = new NotificationServiceSlack(new SlackService())
+const multipleNotificationServices = [
+	new NotificationServiceSlack(new SlackService()),
+	new NotificationServiceEmail(new EmailService()),
+]
+
+const johnDoe = new UserDeveloper('John Doe', singleNotificationService)
+const hansBoom = new UserDeveloper('Hans Boom', multipleNotificationServices)
+const backlogItem = new BacklogItem('Create a new feature', 5)
+
+backlogItem.attach(johnDoe)
+backlogItem.attach(hansBoom)
+
+backlogItem.addActivity(new Activity('Create a new component', 3))
+// --- Observable pattern Example ---

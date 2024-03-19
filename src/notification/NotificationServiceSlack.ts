@@ -1,4 +1,4 @@
-import INotificationService from './INotificationService'
+import { INotificationService } from './INotificationService'
 import SlackService from './external/SlackService'
 
 // Slack adapter for Adapter Pattern
