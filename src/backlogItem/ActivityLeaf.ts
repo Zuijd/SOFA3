@@ -10,6 +10,14 @@ export default class ActivityLeaf extends BacklogItemComponent {
 		throw new Error('activity cannot have activities.')
 	}
 
+	getActivities(): BacklogItemComponent[] {
+		throw new Error('activity cannot have activities.')
+	}
+
+	setActivities(): void {
+		throw new Error('activity cannot have activities.')
+	}
+
 	assignUser(user: User): void {
 		this.user = user
 		console.log(`[INTERNAL] ${this.user?.name} is assigned to activity: ${this.userStory}`)

@@ -8,7 +8,7 @@ export default abstract class BacklogItemComponent extends Subject {
 	private activities: BacklogItemComponent[] = []
 	userStory: string
 	storyPoints: number
-	progression: ProgressionState = new ProgressionStateTodo(this)
+	progression: ProgressionState
 	threads: ThreadComponent[] = []
 	user?: User
 
@@ -17,6 +17,7 @@ export default abstract class BacklogItemComponent extends Subject {
 
 		this.userStory = userStory
 		this.storyPoints = storyPoints
+		this.progression = new ProgressionStateTodo(this)
 	}
 
 	getActivities(): BacklogItemComponent[] {
