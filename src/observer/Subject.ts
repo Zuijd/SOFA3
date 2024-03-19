@@ -1,7 +1,7 @@
 import { IObserver } from './IObserver'
 
 export default abstract class Subject {
-	observers: IObserver[] = []
+	private observers: IObserver[] = []
 
 	attach(observer: IObserver) {
 		this.observers.push(observer)
