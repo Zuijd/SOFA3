@@ -1,7 +1,8 @@
 import Report from '../Report'
-import IReportExport from './IReportExport'
+import IReportExportStrategy from './IReportExportStrategy'
 
-export default class ReportExportPng implements IReportExport {
+// Concrete implementation for Strategy Pattern
+export default class ReportExportPng implements IReportExportStrategy {
 	export(report: Report) {
 		console.log('Exporting report to PNG')
 	}
