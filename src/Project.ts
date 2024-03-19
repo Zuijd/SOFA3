@@ -1,11 +1,11 @@
-import BacklogItem from './BacklogItem'
+import BacklogItemComponent from './backlogItem/BacklogItemComponent'
 // import Thread from './Thread'
 import Sprint from './sprint/Sprint'
 
 export default class Project {
 	name: string
 	doD: string
-	backlog: BacklogItem[] = []
+	backlog: BacklogItemComponent[] = []
 	sprints: Sprint[] = []
 	// discussionForum: Thread[] = []
 
@@ -16,11 +16,11 @@ export default class Project {
 		console.log(`[INTERNAL] Project ${this.name} is created`)
 	}
 
-	addBacklogItem(backlogItem: BacklogItem): void {
+	addBacklogItem(backlogItem: BacklogItemComponent): void {
 		this.backlog.push(backlogItem)
 	}
 
-	removeBacklogItem(backlogitem: BacklogItem): void {
+	removeBacklogItem(backlogitem: BacklogItemComponent): void {
 		this.backlog = this.backlog.filter((item) => item !== backlogitem)
 	}
 
