@@ -1,16 +1,18 @@
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 
-export default class ProgressionStateDone implements IProgressionState {
+export default class ProgressionStateDone extends ProgressionState {
 	private generalResponse(): void {
-		console.log('Backlog item is already done')
+		this.backlogItem.notify('Backlog item is already done')
 	}
 
 	advance(): void {
 		this.generalResponse()
 	}
+
 	cancel(): void {
 		this.generalResponse()
 	}
+
 	decline(): void {
 		this.generalResponse()
 	}

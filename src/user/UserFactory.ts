@@ -1,13 +1,13 @@
 import { INotificationService } from '../notification/INotificationService'
+import User from './User'
 import Developer from './role/Developer'
+import IRole from './role/IRole'
 import LeadDeveloper from './role/LeadDeveloper'
 import ScrumMaster from './role/ScrumMaster'
-import User from './User'
 import Tester from './role/Tester'
-import IRole from './role/IRole'
 
 // Factory for Factory Pattern
-export default class userFactory {
+export default class UserFactory {
 	createUser(
 		name: string,
 		roleString: string,

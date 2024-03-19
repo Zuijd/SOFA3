@@ -1,22 +1,21 @@
-import BacklogItem from '../BacklogItem'
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 import ProgressionStateRFT from './ProgressionStateRFT'
 import ProgressionStateTested from './ProgressionStateTested'
 import ProgressionStateTodo from './ProgressionStateTodo'
 
-export default class ProgressionStateTesting implements IProgressionState {
-	advance(backlogItem: BacklogItem): void {
-		console.log('Task tested by tester, advancing to tested state')
-		backlogItem.setProgression(new ProgressionStateTested())
+export default class ProgressionStateTesting extends ProgressionState {
+	advance(): void {
+		this.backlogItem.notify('Task tested by tester, advancing to tested state')
+		this.backlogItem.setProgression(new ProgressionStateTested(this.backlogItem))
 	}
 
-	cancel(backlogItem: BacklogItem): void {
-		console.log('Task cancelled by tester, returning to RFT state')
-		backlogItem.setProgression(new ProgressionStateRFT())
+	cancel(): void {
+		this.backlogItem.notify('Task cancelled by tester, returning to RFT state')
+		this.backlogItem.setProgression(new ProgressionStateRFT(this.backlogItem))
 	}
 
-	decline(backlogItem: BacklogItem): void {
-		console.log('Task declined by tester, returning to todo state')
-		backlogItem.setProgression(new ProgressionStateTodo())
+	decline(): void {
+		this.backlogItem.notify('Task declined by tester, returning to todo state')
+		this.backlogItem.setProgression(new ProgressionStateTodo(this.backlogItem))
 	}
 }

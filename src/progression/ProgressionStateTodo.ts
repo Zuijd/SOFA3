@@ -1,11 +1,10 @@
-import BacklogItem from '../BacklogItem'
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 import ProgressionStateDoing from './ProgressionStateDoing'
 
-export default class ProgressionStateTodo implements IProgressionState {
-	advance(backlogItem: BacklogItem): void {
-		console.log('Task taken on by developer, advancing to doing state')
-		backlogItem.setProgression(new ProgressionStateDoing())
+export default class ProgressionStateTodo extends ProgressionState {
+	advance(): void {
+		this.backlogItem.notify('Task taken on by developer, advancing to doing state')
+		this.backlogItem.setProgression(new ProgressionStateDoing(this.backlogItem))
 	}
 
 	cancel(): void {

@@ -1,11 +1,10 @@
-import BacklogItem from '../BacklogItem'
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 import ProgressionStateTesting from './ProgressionStateTesting'
 
-export default class ProgressionStateRFT implements IProgressionState {
-	advance(backlogItem: BacklogItem): void {
-		console.log('Tester taken on task, advancing to testing state')
-		backlogItem.setProgression(new ProgressionStateTesting())
+export default class ProgressionStateRFT extends ProgressionState {
+	advance(): void {
+		this.backlogItem.notify('Tester taken on task, advancing to testing state')
+		this.backlogItem.setProgression(new ProgressionStateTesting(this.backlogItem))
 	}
 
 	cancel(): void {

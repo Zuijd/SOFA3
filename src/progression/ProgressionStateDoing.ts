@@ -1,17 +1,16 @@
-import BacklogItem from '../BacklogItem'
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 import ProgressionStateRFT from './ProgressionStateRFT'
 import ProgressionStateTodo from './ProgressionStateTodo'
 
-export default class ProgressionStateDoing implements IProgressionState {
-	advance(backlogItem: BacklogItem): void {
-		console.log('Task finshed by developer, advancing to RFT state')
-		backlogItem.setProgression(new ProgressionStateRFT())
+export default class ProgressionStateDoing extends ProgressionState {
+	advance(): void {
+		this.backlogItem.notify('Task finshed by developer, advancing to RFT state')
+		this.backlogItem.setProgression(new ProgressionStateRFT(this.backlogItem))
 	}
 
-	cancel(backlogItem: BacklogItem): void {
-		console.log('Task cancelled by developer, returning to todo state')
-		backlogItem.setProgression(new ProgressionStateTodo())
+	cancel(): void {
+		this.backlogItem.notify('Task cancelled by developer, returning to todo state')
+		this.backlogItem.setProgression(new ProgressionStateTodo(this.backlogItem))
 	}
 
 	decline(): void {
