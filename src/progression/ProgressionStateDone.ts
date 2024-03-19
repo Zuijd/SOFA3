@@ -1,22 +1,19 @@
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 
-export default class ProgressionStateDone implements IProgressionState {
-	setToToDo(): void {
-		throw new Error('Item is already done. Cannot set to "To Do"')
+export default class ProgressionStateDone extends ProgressionState {
+	private generalResponse(): void {
+		this.backlogItem.notify('Backlog item is already done')
 	}
-	setToDoing(): void {
-		throw new Error('Item is already done. Cannot set to "Doing"')
+
+	advance(): void {
+		this.generalResponse()
 	}
-	setToReadyForTesting(): void {
-		throw new Error('Item is already done. Cannot set to "Ready for Testing"')
+
+	cancel(): void {
+		this.generalResponse()
 	}
-	setToTesting(): void {
-		throw new Error('Item is already done. Cannot set to "Testing"')
-	}
-	setToTested(): void {
-		throw new Error('Item is already done. Cannot set to "Tested"')
-	}
-	setToDone(): void {
-		throw new Error('Item is already done. Cannot set to "Done"')
+
+	decline(): void {
+		this.generalResponse()
 	}
 }

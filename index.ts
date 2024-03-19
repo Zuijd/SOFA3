@@ -7,6 +7,7 @@ import NotificationServiceSlack from './src/notification/NotificationServiceSlac
 import EmailService from './src/notification/external/EmailService'
 import SlackService from './src/notification/external/SlackService'
 import ReviewSprint from './src/sprint/ReviewSprint'
+import { SprintStatus } from './src/sprint/SprintStatus'
 import UserScrumMaster from './src/user/UserScrumMaster'
 import UserTester from './src/user/UserTester'
 import UserDeveloper from './src/user/userDeveloper'
@@ -59,8 +60,9 @@ for (const backlogItem of backlogItems) {
 }
 
 backlogItemWithActivity.attach(developer)
-backlogItemWithActivity.setToDoing()
-backlogItemWithActivity.setToReadyForTesting()
-backlogItemWithActivity.setToTesting()
-backlogItemWithActivity.setToTested()
-backlogItemWithActivity.setToDone() // Should throw error
+backlogItemWithActivity.progression.advance()
+backlogItemWithActivity.progression.advance()
+backlogItemWithActivity.progression.advance()
+backlogItemWithActivity.progression.advance()
+backlogItemWithActivity.progression.advance()
+backlogItemWithActivity.progression.advance()

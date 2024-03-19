@@ -1,6 +1,6 @@
 import Activity from './Activity'
 import Subject from './observer/Subject'
-import IProgressionState from './progression/IProgressionState'
+import ProgressionState from './progression/ProgressionState'
 import ProgressionStateTodo from './progression/ProgressionStateTodo'
 import ThreadComponent from './thread/ThreadComponent'
 import IUser from './user/IUser'
@@ -9,7 +9,7 @@ export default class BacklogItem extends Subject {
 	userStory: string
 	storyPoints: number
 	activities: Activity[] = []
-	progression: IProgressionState = new ProgressionStateTodo()
+	progression: ProgressionState = new ProgressionStateTodo(this)
 	threads: ThreadComponent[] = []
 	user?: IUser
 
@@ -67,31 +67,7 @@ export default class BacklogItem extends Subject {
 		this.user = undefined
 	}
 
-	setState(todo: IProgressionState): void {
-		this.progression = todo
-	}
-
-	setToTodo(): void {
-		this.progression.setToToDo(this)
-	}
-
-	setToDoing(): void {
-		this.progression.setToDoing(this)
-	}
-
-	setToReadyForTesting(): void {
-		this.progression.setToReadyForTesting(this)
-	}
-
-	setToTesting(): void {
-		this.progression.setToTesting(this)
-	}
-
-	setToTested(): void {
-		this.progression.setToTested(this)
-	}
-
-	setToDone(): void {
-		this.progression.setToDone(this)
+	setProgression(progression: ProgressionState): void {
+		this.progression = progression
 	}
 }

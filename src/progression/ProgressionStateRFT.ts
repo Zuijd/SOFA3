@@ -1,27 +1,17 @@
-import BacklogItem from '../BacklogItem'
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 import ProgressionStateTesting from './ProgressionStateTesting'
 
-export default class ProgressionStateRFT implements IProgressionState {
-	setToToDo(): void {
-		throw new Error('It is not possible to set a task to "To Do" when it is "Ready for Testing')
+export default class ProgressionStateRFT extends ProgressionState {
+	advance(): void {
+		this.backlogItem.notify('Tester taken on task, advancing to testing state')
+		this.backlogItem.setProgression(new ProgressionStateTesting(this.backlogItem))
 	}
-	setToDoing(): void {
-		throw new Error('It is not possible to set a task to "Doing" when it is "Ready for Testing"')
+
+	cancel(): void {
+		throw new Error('Backlog item cannot be cancelled while in RFT state')
 	}
-	setToReadyForTesting(): void {
-		throw new Error(
-			'It is not possible to set a task to "Ready for Testing" when it is already "Ready for Testing"'
-		)
-	}
-	setToTesting(backlogItem: BacklogItem): void {
-		backlogItem.setState(new ProgressionStateTesting())
-		backlogItem.notify('Task is now "Testing"')
-	}
-	setToTested(): void {
-		throw new Error('It is not possible to set a task to "Tested" when it is "Ready for Testing"')
-	}
-	setToDone(): void {
-		throw new Error('It is not possible to set a task to "Done" when it is "Ready for Testing"')
+
+	decline(): void {
+		throw new Error('Backlog item cannot be cancelled while in RFT state')
 	}
 }

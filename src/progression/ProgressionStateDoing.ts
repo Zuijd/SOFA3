@@ -1,32 +1,19 @@
-import BacklogItem from '../BacklogItem'
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
 import ProgressionStateRFT from './ProgressionStateRFT'
 import ProgressionStateTodo from './ProgressionStateTodo'
 
-export default class ProgressionStateDoing implements IProgressionState {
-	setToToDo(backlogItem: BacklogItem): void {
-		backlogItem.setState(new ProgressionStateTodo())
-		backlogItem.notify('Task is now "To Do"')
+export default class ProgressionStateDoing extends ProgressionState {
+	advance(): void {
+		this.backlogItem.notify('Task finshed by developer, advancing to RFT state')
+		this.backlogItem.setProgression(new ProgressionStateRFT(this.backlogItem))
 	}
 
-	setToDoing(): void {
-		throw new Error('It is not possible to set a task to "Doing" when it is already "Doing"')
+	cancel(): void {
+		this.backlogItem.notify('Task cancelled by developer, returning to todo state')
+		this.backlogItem.setProgression(new ProgressionStateTodo(this.backlogItem))
 	}
 
-	setToReadyForTesting(backlogItem: BacklogItem): void {
-		backlogItem.setState(new ProgressionStateRFT())
-		backlogItem.notify('Task is now "Ready for Testing"')
-	}
-
-	setToTesting(): void {
-		throw new Error('It is not possible to set a task to "Testing" when it is "Doing"')
-	}
-
-	setToTested(): void {
-		throw new Error('It is not possible to set a task to "Tested" when it is "Doing"')
-	}
-
-	setToDone(): void {
-		throw new Error('It is not possible to set a task to "Done" when it is "Doing"')
+	decline(): void {
+		throw new Error('Backlog item cannot be cancelled while in doing state')
 	}
 }

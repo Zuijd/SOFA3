@@ -1,28 +1,21 @@
-import BacklogItem from '../BacklogItem'
-import IProgressionState from './IProgressionState'
+import ProgressionState from './ProgressionState'
+import ProgressionStateRFT from './ProgressionStateRFT'
 import ProgressionStateTested from './ProgressionStateTested'
 import ProgressionStateTodo from './ProgressionStateTodo'
 
-export default class ProgressionStateTesting implements IProgressionState {
-	setToToDo(backlogItem: BacklogItem): void {
-		backlogItem.setState(new ProgressionStateTodo())
-		backlogItem.notify('Task is now "To Do"')
+export default class ProgressionStateTesting extends ProgressionState {
+	advance(): void {
+		this.backlogItem.notify('Task tested by tester, advancing to tested state')
+		this.backlogItem.setProgression(new ProgressionStateTested(this.backlogItem))
 	}
-	setToDoing(): void {
-		throw new Error('It is not possible to set a task to "Doing" when it is "Testing"')
+
+	cancel(): void {
+		this.backlogItem.notify('Task cancelled by tester, returning to RFT state')
+		this.backlogItem.setProgression(new ProgressionStateRFT(this.backlogItem))
 	}
-	setToReadyForTesting(backlogItem: BacklogItem): void {
-		backlogItem.setState(new ProgressionStateTesting())
-		backlogItem.notify('Task is now "Ready for Testing"')
-	}
-	setToTesting(backlogItem: BacklogItem): void {
-		throw new Error('It is not possible to set a task to "Testing" when it is already "Testing"')
-	}
-	setToTested(backlogItem: BacklogItem): void {
-		backlogItem.setState(new ProgressionStateTested())
-		backlogItem.notify('Task is now "Tested"')
-	}
-	setToDone(backlogItem: BacklogItem): void {
-		throw new Error('It is not possible to set a task to "Done" when it is "Testing"')
+
+	decline(): void {
+		this.backlogItem.notify('Task declined by tester, returning to todo state')
+		this.backlogItem.setProgression(new ProgressionStateTodo(this.backlogItem))
 	}
 }
