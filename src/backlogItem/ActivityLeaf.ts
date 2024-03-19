@@ -10,7 +10,7 @@ export default class ActivityLeaf extends BacklogItemComponent {
 		throw new Error('activity cannot have activities.')
 	}
 
-	getActivities(): BacklogItemComponent[] {
+	getActivities(): ActivityLeaf[] {
 		throw new Error('activity cannot have activities.')
 	}
 

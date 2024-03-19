@@ -3,9 +3,10 @@ import ProgressionState from '../progression/ProgressionState'
 import ProgressionStateTodo from '../progression/ProgressionStateTodo'
 import ThreadComponent from '../thread/ThreadComponent'
 import User from '../user/User'
+import ActivityLeaf from './ActivityLeaf'
 
 export default abstract class BacklogItemComponent extends Subject {
-	private activities: BacklogItemComponent[] = []
+	private activities: ActivityLeaf[] = []
 	userStory: string
 	storyPoints: number
 	progression: ProgressionState
@@ -20,11 +21,11 @@ export default abstract class BacklogItemComponent extends Subject {
 		this.progression = new ProgressionStateTodo(this)
 	}
 
-	getActivities(): BacklogItemComponent[] {
+	getActivities(): ActivityLeaf[] {
 		return this.activities
 	}
 
-	setActivities(activities: BacklogItemComponent[]): void {
+	setActivities(activities: ActivityLeaf[]): void {
 		this.activities = activities
 	}
 
@@ -40,8 +41,8 @@ export default abstract class BacklogItemComponent extends Subject {
 		this.progression = progression
 	}
 
-	abstract addActivity(activity: BacklogItemComponent): void
-	abstract removeActivity(activity: BacklogItemComponent): void
+	abstract addActivity(activity: ActivityLeaf): void
+	abstract removeActivity(activity: ActivityLeaf): void
 	abstract assignUser(user: User): void
 	abstract dismissUser(): void
 }
