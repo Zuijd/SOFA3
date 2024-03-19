@@ -1,13 +1,13 @@
-import IProgressionState from './progression/IProgressionState'
-import ProgressionStateTodo from './progression/ProgressionStateTodo'
+import BacklogItem from './BacklogItem'
 
-export default class Activity {
-	description: string
-	points: number
-	progression: IProgressionState = new ProgressionStateTodo()
+export default class Activity extends BacklogItem {
+	addActivity(activity: Activity): void {
+		throw new Error('Activities nested in activities are not supported')
+	}
 
-	constructor(description: string, points: number) {
-		this.description = description
-		this.points = points
+	removeActivity(activity: Activity): void {
+		if (this.constructor === Activity) {
+			throw new Error('Activities nested in activities are not supported')
+		}
 	}
 }

@@ -12,6 +12,8 @@ export default class Project {
 	constructor(name: string, doD: string) {
 		this.name = name
 		this.doD = doD
+
+		console.log(`[INTERNAL] Project ${this.name} is created`)
 	}
 
 	addBacklogItem(backlogItem: BacklogItem): void {
@@ -28,6 +30,12 @@ export default class Project {
 
 	removeSprint(sprint: Sprint): void {
 		this.sprints = this.sprints.filter((item) => item !== sprint)
+	}
+
+	displaySprints(): void {
+		for (const sprint of this.sprints) {
+			console.log(sprint)
+		}
 	}
 
 	// addThread(thread: Thread): void {
