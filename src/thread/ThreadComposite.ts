@@ -1,13 +1,8 @@
-import IUser from '../user/IUser'
 import ThreadComponent from './ThreadComponent'
 
 // Composite class for Composite Pattern
 export default class ThreadComposite extends ThreadComponent {
 	threads: ThreadComponent[] = []
-
-	constructor(text: string, user: IUser) {
-		super(text, user)
-	}
 
 	addThread(thread: ThreadComponent): void {
 		this.threads.push(thread)

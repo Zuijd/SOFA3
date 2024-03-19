@@ -1,11 +1,11 @@
-import IUser from '../user/IUser'
+import User from '../user/User'
 
 // Component interface for Composite Pattern
 export default abstract class ThreadComponent {
 	private text: string
-	private user: IUser
+	private user: User
 
-	constructor(text: string, user: IUser) {
+	constructor(text: string, user: User) {
 		this.text = text
 		this.user = user
 	}
@@ -16,7 +16,7 @@ export default abstract class ThreadComponent {
 		return this.text
 	}
 
-	getUser(): IUser {
+	getUser(): User {
 		return this.user
 	}
 
@@ -24,7 +24,7 @@ export default abstract class ThreadComponent {
 		this.text = text
 	}
 
-	setUser(user: IUser): void {
+	setUser(user: User): void {
 		this.user = user
 	}
 }

@@ -6,8 +6,6 @@ export default class Activity extends BacklogItem {
 	}
 
 	removeActivity(activity: Activity): void {
-		if (this.constructor === Activity) {
-			throw new Error('Activities nested in activities are not supported')
-		}
+		throw new Error('Activities nested in activities are not supported')
 	}
 }
