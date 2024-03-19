@@ -1,13 +1,15 @@
 import { INotificationService } from '../notification/INotificationService'
 import { IObserver } from '../observer/IObserver'
-import IUser from './IUser'
+import IRole from './role/IRole'
 
-export default class UserDeveloper implements IUser, IObserver {
+export default class User implements IObserver {
 	name: string
+	role: IRole
 	notificationMethods: INotificationService | INotificationService[]
 
-	constructor(name: string, notificationMethod: INotificationService | INotificationService[]) {
+	constructor(name: string, role: IRole, notificationMethod: INotificationService | INotificationService[]) {
 		this.name = name
+		this.role = role
 		this.notificationMethods = notificationMethod
 	}
 
@@ -19,5 +21,9 @@ export default class UserDeveloper implements IUser, IObserver {
 		} else {
 			this.notificationMethods.sendNotification(message, this.name)
 		}
+	}
+
+	performTask(): void {
+		this.role.performTask()
 	}
 }
