@@ -1,3 +1,3 @@
-export interface Observer {
+export interface IObserver {
 	notify(message: string): void
 }

@@ -1,8 +1,8 @@
 import { INotificationService } from '../notification/INotificationService'
-import { Observer } from '../observer/Observer'
+import { IObserver } from '../observer/IObserver'
 import IUser from './IUser'
 
-export default class UserDeveloper implements IUser, Observer {
+export default class UserDeveloper implements IUser, IObserver {
 	name: string
 	notificationMethods: INotificationService | INotificationService[]
 

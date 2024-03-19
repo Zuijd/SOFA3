@@ -4,7 +4,7 @@ import NotificationServiceEmail from './src/notification/NotificationServiceEmai
 import NotificationServiceSlack from './src/notification/NotificationServiceSlack'
 import EmailService from './src/notification/external/EmailService'
 import SlackService from './src/notification/external/SlackService'
-import UserDeveloper from './src/user/userDeveloper'
+import UserDeveloper from './src/user/UserDeveloper'
 
 // --- Observable pattern Example ---
 const singleNotificationService = new NotificationServiceSlack(new SlackService())

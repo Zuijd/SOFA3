@@ -1,13 +1,13 @@
-import { Observer } from './Observer'
+import { IObserver } from './IObserver'
 
 export default abstract class Subject {
-	observers: Observer[] = []
+	observers: IObserver[] = []
 
-	attach(observer: Observer) {
+	attach(observer: IObserver) {
 		this.observers.push(observer)
 	}
 
-	detach(observer: Observer) {
+	detach(observer: IObserver) {
 		this.observers = this.observers.filter((item) => item !== observer)
 	}
 
