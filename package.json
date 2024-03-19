@@ -8,6 +8,7 @@
 		"start": "ts-node index.ts"
 	},
 	"dependencies": {
+		"chalk": "^4.1.2",
 		"fs": "^0.0.1-security",
 		"ts-node": "^10.9.2"
 	}

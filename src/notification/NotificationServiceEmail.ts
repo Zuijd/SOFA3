@@ -1,4 +1,4 @@
-import INotificationService from './INotificationService'
+import { INotificationService } from './INotificationService'
 import EmailService from './external/EmailService'
 
 // Email adapter for Adapter Pattern
