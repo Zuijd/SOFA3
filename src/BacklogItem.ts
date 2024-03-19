@@ -31,4 +31,8 @@ export default class BacklogItem {
 	removeThread(thread: ThreadComponent): void {
 		this.threads = this.threads.filter((item) => item !== thread)
 	}
+
+	setProgression(progression: IProgressionState): void {
+		this.progression = progression
+	}
 }

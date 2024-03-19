@@ -1,3 +1,7 @@
+import BacklogItem from '../BacklogItem'
+
 export default interface IProgressionState {
-	handle(): void
+	advance(backlogItem: BacklogItem): void
+	cancel(backlogItem: BacklogItem): void
+	decline(backlogItem: BacklogItem): void
 }
