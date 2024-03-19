@@ -1,5 +1,5 @@
 import BacklogItem from './BacklogItem'
-import Thread from './Thread'
+// import Thread from './Thread'
 import Sprint from './sprint/Sprint'
 
 export default class Project {
@@ -7,7 +7,7 @@ export default class Project {
 	doD: string
 	backlog: BacklogItem[] = []
 	sprints: Sprint[] = []
-	discussionForum: Thread[] = []
+	// discussionForum: Thread[] = []
 
 	constructor(name: string, doD: string) {
 		this.name = name
@@ -30,11 +30,11 @@ export default class Project {
 		this.sprints = this.sprints.filter((item) => item !== sprint)
 	}
 
-	addThread(thread: Thread): void {
-		this.discussionForum.push(thread)
-	}
+	// addThread(thread: Thread): void {
+	// 	this.discussionForum.push(thread)
+	// }
 
-	removeThread(thread: Thread): void {
-		this.discussionForum = this.discussionForum.filter((item) => item !== thread)
-	}
+	// removeThread(thread: Thread): void {
+	// 	this.discussionForum = this.discussionForum.filter((item) => item !== thread)
+	// }
 }
