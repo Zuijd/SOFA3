@@ -1,9 +1,9 @@
-import BacklogItem from '../BacklogItem'
+import BacklogItemComponent from '../backlogItem/BacklogItemComponent'
 
 export default abstract class ProgressionState {
-	backlogItem: BacklogItem
+	backlogItem: BacklogItemComponent
 
-	constructor(backlogItem: BacklogItem) {
+	constructor(backlogItem: BacklogItemComponent) {
 		this.backlogItem = backlogItem
 	}
 

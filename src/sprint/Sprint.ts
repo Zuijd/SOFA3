@@ -1,4 +1,4 @@
-import BacklogItem from '../BacklogItem'
+import BacklogItemComponent from '../backlogItem/BacklogItemComponent'
 import { SprintStatus } from './SprintStatus'
 
 export default abstract class Sprint {
@@ -6,7 +6,7 @@ export default abstract class Sprint {
 	startDate: Date
 	endDate: Date
 	status: SprintStatus
-	backlogItems: BacklogItem[] = []
+	backlogItems: BacklogItemComponent[] = []
 
 	constructor(name: string, startDate: Date, endDate: Date, status: SprintStatus) {
 		this.name = name
@@ -15,11 +15,11 @@ export default abstract class Sprint {
 		this.status = status
 	}
 
-	addBacklogItem(backlogitem: BacklogItem): void {
+	addBacklogItem(backlogitem: BacklogItemComponent): void {
 		this.backlogItems.push(backlogitem)
 	}
 
-	removeBacklogItem(backlogitem: BacklogItem): void {
+	removeBacklogItem(backlogitem: BacklogItemComponent): void {
 		this.backlogItems = this.backlogItems.filter((item) => item !== backlogitem)
 	}
 }
