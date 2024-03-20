@@ -1,8 +1,8 @@
 import Project from '../src/Project'
 import BacklogItemComponent from '../src/backlogItem/BacklogItemComponent'
 import BacklogItemComposite from '../src/backlogItem/BacklogItemComposite'
-import Sprint from '../src/sprint/Sprint'
 import ReviewSprint from '../src/sprint/ReviewSprint'
+import Sprint from '../src/sprint/Sprint'
 import { SprintStatus } from '../src/sprint/SprintStatus'
 
 jest.mock('../src/backlogItem/BacklogItemComponent')

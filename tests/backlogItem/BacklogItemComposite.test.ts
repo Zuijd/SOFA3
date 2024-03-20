@@ -59,7 +59,7 @@ describe('BacklogItemComposite', () => {
 		expect(backlogItem.getActivities()).not.toContain(activity)
 	})
 
-	it('should assign a user', () => {
+	it('should assign a user to a backlogItem', () => {
 		// arrange
 		const logSpy = jest.spyOn(console, 'log')
 		const functionSpy = jest.spyOn(backlogItem, 'assignUser')
@@ -77,7 +77,7 @@ describe('BacklogItemComposite', () => {
 		expect(backlogItem.user).toBe(user)
 	})
 
-	it('should dismiss a user', () => {
+	it('should dismiss an user of a backlogItem', () => {
 		// arrange
 		const logSpy = jest.spyOn(console, 'log')
 		const functionSpy = jest.spyOn(backlogItem, 'dismissUser')
