@@ -1,13 +1,11 @@
-import BacklogItemComponent from './backlogItem/BacklogItemComponent'
-// import Thread from './Thread'
+import BacklogItemComposite from './backlogItem/BacklogItemComposite'
 import Sprint from './sprint/Sprint'
 
 export default class Project {
 	name: string
 	doD: string
-	backlog: BacklogItemComponent[] = []
+	backlog: BacklogItemComposite[] = []
 	sprints: Sprint[] = []
-	// discussionForum: Thread[] = []
 
 	constructor(name: string, doD: string) {
 		this.name = name
@@ -16,11 +14,11 @@ export default class Project {
 		console.log(`[INTERNAL] Project ${this.name} is created`)
 	}
 
-	addBacklogItem(backlogItem: BacklogItemComponent): void {
+	addBacklogItem(backlogItem: BacklogItemComposite): void {
 		this.backlog.push(backlogItem)
 	}
 
-	removeBacklogItem(backlogitem: BacklogItemComponent): void {
+	removeBacklogItem(backlogitem: BacklogItemComposite): void {
 		this.backlog = this.backlog.filter((item) => item !== backlogitem)
 	}
 
@@ -37,12 +35,4 @@ export default class Project {
 			console.log(sprint)
 		}
 	}
-
-	// addThread(thread: Thread): void {
-	// 	this.discussionForum.push(thread)
-	// }
-
-	// removeThread(thread: Thread): void {
-	// 	this.discussionForum = this.discussionForum.filter((item) => item !== thread)
-	// }
 }

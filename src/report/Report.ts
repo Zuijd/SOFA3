@@ -1,5 +1,5 @@
 import ReportExportStrategy from './export/IReportExportStrategy'
-import IUser from '../user/IUser'
+import User from '../user/User'
 import StyleItem from './StyleItem'
 import ReportExportPng from './export/ReportExportPng'
 
@@ -8,11 +8,11 @@ export default class Report {
 	private exportStrategy: ReportExportStrategy
 	effortPoints: number
 	burndownChart?: Blob
-	team: IUser[]
+	team: User[]
 	header?: StyleItem
 	footer?: StyleItem
 
-	constructor(effortPoints: number, team: IUser[] = [], header?: StyleItem, footer?: StyleItem) {
+	constructor(effortPoints: number, team: User[] = [], header?: StyleItem, footer?: StyleItem) {
 		this.effortPoints = effortPoints
 		this.team = team
 		this.header = header

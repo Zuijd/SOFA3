@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es5",                           
+    "module": "commonjs",                      
+    "lib": ["dom", "es6", "dom.iterable", "scripthost"],  
+    "allowJs": true,                           
+    "skipLibCheck": true,                      
+    "esModuleInterop": true,                   
+    "strict": true,                            
+    "forceConsistentCasingInFileNames": true,  
+    "resolveJsonModule": true,                 
+    "outDir": "./dist"                         
+  },
+  "include": [
+    "src/**/*"                                 
+, "src/Thing.ts"  ],
+  "exclude": [
+    "node_modules",                            
+    "**/*.test.ts"                             
+  ]
+}

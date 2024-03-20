@@ -25,11 +25,12 @@ const multipleNotificationServices = [
 	new NotificationServiceEmail(new EmailService()),
 ]
 
-const scrumMaster = new UserFactory().createUser('Kees Boom', 'ScrumMaster', multipleNotificationServices)
-const leadDeveloper = new UserFactory().createUser('Ryan Scope', 'LeadDeveloper', multipleNotificationServices)
-const developer = new UserFactory().createUser('John Doe', 'Developer', singleNotificationService)
-const developer2 = new UserFactory().createUser('Henk Kees', 'Developer', singleNotificationService)
-const tester = new UserFactory().createUser('Hans Boom', 'Tester', singleNotificationService)
+const userFactory = new UserFactory()
+const scrumMaster = userFactory.createUser('Kees Boom', 'ScrumMaster', multipleNotificationServices)
+const leadDeveloper = userFactory.createUser('Ryan Scope', 'LeadDeveloper', multipleNotificationServices)
+const developer = userFactory.createUser('John Doe', 'Developer', singleNotificationService)
+const developer2 = userFactory.createUser('Henk Kees', 'Developer', singleNotificationService)
+const tester = userFactory.createUser('Hans Boom', 'Tester', singleNotificationService)
 
 const activity1 = new ActivityLeaf('Create a new component', 3)
 const activity2 = new ActivityLeaf('Create a new service', 2)
