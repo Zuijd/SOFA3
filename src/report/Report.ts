@@ -1,6 +1,6 @@
-import ReportExportStrategy from './export/IReportExportStrategy'
 import User from '../user/User'
 import StyleItem from './StyleItem'
+import ReportExportStrategy from './export/IReportExportStrategy'
 import ReportExportPng from './export/ReportExportPng'
 
 // Conrtext class for Strategy Pattern
