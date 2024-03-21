@@ -1,3 +1,4 @@
+import Report from '../report/Report'
 import Sprint from './Sprint'
 import { SprintStatus } from './SprintStatus'
 

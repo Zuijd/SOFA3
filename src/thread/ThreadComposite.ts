@@ -17,7 +17,7 @@ export default class ThreadComposite extends ThreadComponent {
 	}
 
 	display(indentation: number = 0): void {
-		console.log(' '.repeat(indentation) + this.getUser().name + ': ' + this.getText())
+		console.log(' '.repeat(indentation) + this.getUser()?.name + ': ' + this.getText())
 		this.threads.forEach((child) => child.display(indentation + 2))
 	}
 }
