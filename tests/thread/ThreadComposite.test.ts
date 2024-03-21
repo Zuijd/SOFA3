@@ -55,4 +55,48 @@ describe('Thread', () => {
 		expect(backlogItem.threads).toHaveLength(0)
 		expect(backlogItem.threads).not.toContain(thread)
 	})
+
+	it('should be able to add thread to another thread', () => {
+		// arrange
+		const functionSpy = jest.spyOn(thread, 'addThread')
+
+		// act
+		thread.addThread(thread)
+
+		// assert
+		expect(functionSpy).toHaveBeenCalledTimes(1)
+		expect(functionSpy).toHaveBeenLastCalledWith(thread)
+		expect(thread.threads).toHaveLength(1)
+		expect(thread.threads).toContain(thread)
+	})
+
+	it('should be able to remove thread from another thread', () => {
+		// arrange
+		const functionSpy = jest.spyOn(thread, 'removeThread')
+
+		// act
+		thread.addThread(thread)
+		thread.removeThread(thread)
+
+		// assert
+		expect(functionSpy).toHaveBeenCalledTimes(1)
+		expect(functionSpy).toHaveBeenLastCalledWith(thread)
+		expect(thread.threads).toHaveLength(0)
+		expect(thread.threads).not.toContain(thread)
+	})
+
+	it('should be able to remove thread from another thread', () => {
+		// arrange
+		const functionSpy = jest.spyOn(thread, 'getThreads')
+
+		// act
+		thread.addThread(thread)
+		thread.addThread(thread)
+		const result = thread.getThreads()
+
+		// assert
+		expect(thread.threads).toHaveLength(2)
+		expect(functionSpy).toHaveBeenCalledTimes(1)
+		expect(result).toHaveLength(2)
+	})
 })
