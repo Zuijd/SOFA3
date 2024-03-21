@@ -2,7 +2,7 @@ import User from '../user/User'
 import BacklogItemComponent from './BacklogItemComponent'
 import ActivityLeaf from './ActivityLeaf'
 
-export default class BacklogItem extends BacklogItemComponent {
+export default class BacklogItemComposite extends BacklogItemComponent {
 	constructor(userStory: string, storyPoints: number, activities: ActivityLeaf[] = []) {
 		super(userStory, storyPoints)
 		this.setActivities(activities)

@@ -2,7 +2,7 @@ import Sprint from './Sprint'
 import { SprintStatus } from './SprintStatus'
 
 export default class ReleaseSprint extends Sprint {
-	private report: Report
+	private report: Report | undefined
 
 	constructor(name: string, startDate: Date, endDate: Date, status: SprintStatus) {
 		super(name, startDate, endDate, status)
@@ -12,7 +12,7 @@ export default class ReleaseSprint extends Sprint {
 		this.report = report
 	}
 
-	getReport(): Report {
+	getReport(): Report | undefined {
 		return this.report
 	}
 }
