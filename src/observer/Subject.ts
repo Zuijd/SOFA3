@@ -14,4 +14,8 @@ export default abstract class Subject {
 	notify(message: string) {
 		this.observers.forEach((observer) => observer.notify(message))
 	}
+
+	getObservers() {
+		return this.observers
+	}
 }

@@ -1,6 +1,6 @@
 import User from '../user/User'
-import BacklogItemComponent from './BacklogItemComponent'
 import ActivityLeaf from './ActivityLeaf'
+import BacklogItemComponent from './BacklogItemComponent'
 
 export default class BacklogItemComposite extends BacklogItemComponent {
 	constructor(userStory: string, storyPoints: number, activities: ActivityLeaf[] = []) {
