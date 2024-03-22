@@ -1,11 +1,5 @@
 // Template for Template Pattern
 export default abstract class PipelineTemplate {
-	protected settings: { [key: string]: any }
-
-	constructor(settings?: { [key: string]: any }) {
-		this.settings = settings || {}
-	}
-
 	async executeAsync(): Promise<void> {
 		await this.fetchSourceAsync()
 		await this.installPackagesAsync()
